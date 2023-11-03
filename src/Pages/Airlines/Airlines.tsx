@@ -8,8 +8,6 @@ import SeatsDetails from './SeatsDetails/SeatsDetails'
 import { IAirlinesData } from '../../Shared/Interface/airline.intertface'
 
 const Airlines = observer(({ airlineStore }: any) => {
-    // const [airlines, setAirlines] = useState<IAirlinesData[]>([])
-
     const [selectedFlightName, setSelectedFlightName] = useState('')
     const [selectedPassangerName, setSelectedPassangerName] = useState('')
     const [selectedFlightDetails, setselectedFlightDetails] =
@@ -23,18 +21,17 @@ const Airlines = observer(({ airlineStore }: any) => {
     useEffect(() => {
         airlineStore.setAirlineData(airlineData)
     }, [])
+
     useEffect(() => {
         const selectedFlight = toJS(airlineStore.airlines).filter(
             (flight: IAirlinesData) => flight.flights === selectedFlightName,
         )
-        // airlineStore.setAirlineData(airlineData)
-        // setAirlines(toJS(airlineStore.airlines))
         setselectedFlightDetails(selectedFlight[0])
     }, [selectedFlightName, airlineStore.airlines])
 
     console.log(selectedFlightName)
     console.log(selectedPassangerName)
-    // console.log(selectedFlightDetails)
+
     return (
         <Container>
             <Box

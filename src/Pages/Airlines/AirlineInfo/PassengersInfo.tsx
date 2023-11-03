@@ -24,7 +24,6 @@ const PassengersInfo = observer(
         selectedPassangerName,
         setSelectedPassangerName,
     }: Props) => {
-        const [alotedSeat, setAlotedSeat] = useState(0)
         // console.log(selectedFlightDetails)
         // console.log(alotedSeat)
         // console.log(selectedFlightDetails)
@@ -33,7 +32,7 @@ const PassengersInfo = observer(
                 (p: IPassenger) => p.name === selectedPassangerName,
             )
             // console.log(passanger)
-            setAlotedSeat(passanger[0]?.seatNumber)
+            airlineStore.setAlotedSeat(passanger[0]?.seatNumber)
         }, [selectedPassangerName])
         return (
             <div>
@@ -74,7 +73,7 @@ const PassengersInfo = observer(
                             ),
                         )}
                     </select>
-                    <p>Passanger Seat: {alotedSeat}</p>
+                    <p>Passanger Seat: {airlineStore.alotedSeat}</p>
                 </div>
             </div>
         )
