@@ -19,6 +19,7 @@ export class AirlineStore {
         console.log(airlineData)
         this.airlines = airlineData
     }
+
     setAlotedSeat = (passanger: number) => {
         this.alotedSeat = passanger
     }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { toJS } from 'mobx'
+import { Box } from '@mui/material'
 import { inject, observer } from 'mobx-react'
 import {
     IAirlinesData,
@@ -24,20 +25,16 @@ const PassengersInfo = observer(
         selectedPassangerName,
         setSelectedPassangerName,
     }: Props) => {
-        // console.log(selectedFlightDetails)
-        // console.log(alotedSeat)
-        // console.log(selectedFlightDetails)
         useEffect(() => {
             const passanger = selectedFlightDetails?.passaenger.filter(
                 (p: IPassenger) => p.name === selectedPassangerName,
             )
-            // console.log(passanger)
             airlineStore.setAlotedSeat(passanger[0]?.seatNumber)
         }, [selectedPassangerName])
         return (
             <div>
-                <div>
-                    <span>select flights : </span>
+                <Box display='flex' mb={2}>
+                    <span>choose Flights : </span>
                     <select
                         className='px-2 mr-4 text-gray-700 font-medium '
                         name='classes'
@@ -53,9 +50,9 @@ const PassengersInfo = observer(
                             ),
                         )}
                     </select>
-                </div>
-                <div>
-                    <span>select passanger : </span>
+                </Box>
+                <Box display='flex'>
+                    <span>choose Passanger : </span>
                     <select
                         className='px-2 mr-4 text-gray-700 font-medium '
                         name='classes'
@@ -73,8 +70,8 @@ const PassengersInfo = observer(
                             ),
                         )}
                     </select>
-                    <p>Passanger Seat: {airlineStore.alotedSeat}</p>
-                </div>
+                </Box>
+                <p>Passanger Seat: {airlineStore.alotedSeat}</p>
             </div>
         )
     },
