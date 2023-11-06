@@ -69,13 +69,22 @@ const SeatsDetails = observer(
             console.log(seatNumber)
         }
 
-        console.log(selectedFlightDetails)
-        console.log(seats)
+        // console.log(selectedFlightDetails)
+        // console.log(seats)
 
         return (
-            <div style={{ display: 'flex', flexWrap: 'wrap', width: 300 }}>
-                {seats?.map((seat: ISeat) => (
-                    <>
+            <div
+                style={{
+                    border: '1px solid gray',
+                    padding: 2,
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    width: 300,
+                    height: 300,
+                }}
+            >
+                {seats?.map((seat: ISeat, i: number) => (
+                    <React.Fragment key={i}>
                         {isChangeSeat ? (
                             seat.isTaken ? (
                                 seat.seatNumber === airlineStore.alotedSeat ? (
@@ -166,7 +175,7 @@ const SeatsDetails = observer(
                                 <p>{seat.seatNumber}</p>
                             </button>
                         )}
-                    </>
+                    </React.Fragment>
                 ))}
             </div>
         )
