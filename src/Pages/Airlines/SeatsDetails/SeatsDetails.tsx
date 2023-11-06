@@ -59,6 +59,21 @@ const SeatsDetails = observer(
                 },
             )
             console.log(updateData)
+
+            const updatedData = airlineData.map((data: IAirlinesData) => {
+                if (data.flights === selectedFlightDetails.flights) {
+                    return {
+                        ...selectedFlightDetails,
+                        passaenger: updateData,
+                    }
+                } else {
+                    return data
+                }
+            })
+
+            console.log('updated Data -- ', updatedData)
+            localStorage.setItem('airlineData', JSON.stringify(updatedData))
+
             setselectedFlightDetails({
                 ...selectedFlightDetails,
                 passaenger: updateData,
@@ -68,7 +83,6 @@ const SeatsDetails = observer(
 
             console.log(seatNumber)
         }
-
         // console.log(selectedFlightDetails)
         // console.log(seats)
 

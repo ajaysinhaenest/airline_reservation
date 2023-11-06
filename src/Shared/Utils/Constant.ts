@@ -2,7 +2,7 @@ import { IAirlinesData } from '../Interface/airline.intertface'
 
 export {}
 
-export const airlineData: IAirlinesData[] = [
+export const airlineStaticData: IAirlinesData[] = [
     {
         flights: '102 - Airbus A380',
         passaenger: [

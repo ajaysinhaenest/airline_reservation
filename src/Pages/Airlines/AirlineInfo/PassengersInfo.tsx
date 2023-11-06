@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { toJS } from 'mobx'
+import { useEffect } from 'react'
 import { Box } from '@mui/material'
 import { inject, observer } from 'mobx-react'
 import {
@@ -42,7 +41,7 @@ const PassengersInfo = observer(
                         value={selectedFlightName}
                         onChange={(e) => setSelectedFlightName(e.target.value)}
                     >
-                        <option value=''></option>
+                        <option value=''>select flight</option>
                         {airlineStore?.airlines?.map(
                             (flight: IAirlinesData, i: number) => (
                                 <option value={flight.flights} key={i}>
@@ -62,7 +61,7 @@ const PassengersInfo = observer(
                             setSelectedPassangerName(e.target.value)
                         }
                     >
-                        <option value=''></option>
+                        <option value=''>select passanger</option>
                         {selectedFlightDetails?.passaenger.map(
                             (passanger: IPassenger, i: number) => (
                                 <option value={passanger.name} key={i}>

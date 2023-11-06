@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { inject, observer } from 'mobx-react'
 import { toJS } from 'mobx'
-import { airlineData } from '../../Shared/Utils/Constant'
+import { airlineStaticData } from '../../Shared/Utils/Constant'
 import {
     Box,
     Button,
@@ -47,8 +47,13 @@ const Airlines = observer(({ airlineStore }: any) => {
     })
 
     useEffect(() => {
+        // localStorage.setItem('airlineData', JSON.stringify(airlineStaticData))
+
+        const airlineData = JSON.parse(
+            localStorage.getItem('airlineData') || 'null',
+        )
         airlineStore.setAirlineData(airlineData)
-    }, [])
+    }, [airlineStore])
 
     useEffect(() => {
         const selectedFlight = toJS(airlineStore.airlines).filter(
@@ -58,10 +63,26 @@ const Airlines = observer(({ airlineStore }: any) => {
     }, [selectedFlightName, airlineStore.airlines])
 
     const handleDeletePassanger = () => {
+        const airlineData = JSON.parse(
+            localStorage.getItem('airlineData') || 'null',
+        )
+
         const passangers = selectedFlightDetails?.passaenger.filter(
             (p: IPassenger) => p.name !== selectedPassangerName,
         )
-        // console.log(passangers)
+
+        const updatedData = airlineData.map((data: IAirlinesData) => {
+            if (data.flights === selectedFlightDetails.flights) {
+                return {
+                    ...selectedFlightDetails,
+                    passaenger: passangers,
+                }
+            } else {
+                return data
+            }
+        })
+        console.log('updated Data --', updatedData)
+        localStorage.setItem('airlineData', JSON.stringify(updatedData))
         setselectedFlightDetails({
             ...selectedFlightDetails,
             passaenger: passangers,
@@ -70,6 +91,9 @@ const Airlines = observer(({ airlineStore }: any) => {
 
     const handleAddPassanger = (e: React.FormEvent) => {
         e.preventDefault()
+        const airlineData = JSON.parse(
+            localStorage.getItem('airlineData') || 'null',
+        )
 
         const seats = selectedFlightDetails?.seats.filter((seat: ISeats) => {
             const isTaken = selectedFlightDetails.passaenger.some(
@@ -78,25 +102,43 @@ const Airlines = observer(({ airlineStore }: any) => {
             if (!isTaken) return seat
         })
 
+        const alotedSeat = getSeatNumber(seats)
+        const updatedData = airlineData.map((data: IAirlinesData) => {
+            if (data.flights === selectedFlightDetails.flights) {
+                return {
+                    ...selectedFlightDetails,
+                    passaenger: [
+                        ...selectedFlightDetails.passaenger,
+                        {
+                            name:
+                                addPassanger.firstName +
+                                ' ' +
+                                addPassanger.lastName,
+                            seatNumber: alotedSeat,
+                        },
+                    ],
+                }
+            } else {
+                return data
+            }
+        })
+        console.log('updated Data --', updatedData)
+        localStorage.setItem('airlineData', JSON.stringify(updatedData))
         console.log(seats)
-
-        // console.log('hello')
-        // console.log(addPassanger)
-
         setselectedFlightDetails({
             ...selectedFlightDetails,
             passaenger: [
                 ...selectedFlightDetails.passaenger,
                 {
                     name: addPassanger.firstName + ' ' + addPassanger.lastName,
-                    seatNumber: getSeatNumber(seats),
+                    seatNumber: alotedSeat,
                 },
             ],
         })
         setAddPassanger({ firstName: '', lastName: '' })
-
         setOpen(false)
     }
+
     return (
         <Container>
             <Box
