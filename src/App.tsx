@@ -1,4 +1,4 @@
-import Airlines from './Pages/Airlines/Airlines'
+import Airlines from './Modals/Airlines/Airlines'
 
 function App() {
     return (

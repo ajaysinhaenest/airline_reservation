@@ -30,7 +30,6 @@ const StyledModal = styled(Modal)({
 const Airlines = observer(({ airlineStore }: any) => {
     const [selectedFlightName, setSelectedFlightName] = useState('')
     const [selectedPassangerName, setSelectedPassangerName] = useState('')
-
     const [selectedFlightDetails, setselectedFlightDetails] =
         useState<IAirlinesData>({
             flights: '',
@@ -53,7 +52,7 @@ const Airlines = observer(({ airlineStore }: any) => {
             localStorage.getItem('airlineData') || 'null',
         )
         airlineStore.setAirlineData(airlineData)
-    }, [airlineStore])
+    }, [])
 
     useEffect(() => {
         const selectedFlight = toJS(airlineStore.airlines).filter(
@@ -77,9 +76,8 @@ const Airlines = observer(({ airlineStore }: any) => {
                     ...selectedFlightDetails,
                     passaenger: passangers,
                 }
-            } else {
-                return data
             }
+            return data
         })
         console.log('updated Data --', updatedData)
         localStorage.setItem('airlineData', JSON.stringify(updatedData))
