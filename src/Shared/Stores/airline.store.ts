@@ -16,7 +16,7 @@ export class AirlineStore {
         this.rootStore = rootStore
     }
     setAirlineData = (airlineData: IAirlinesData[]) => {
-        console.log(airlineData)
+        // console.log(airlineData)
         this.airlines = airlineData
     }
 

@@ -31,6 +31,7 @@ const PassengersInfo = observer(
             )
             airlineStore.setAlotedSeat(passanger[0]?.seatNumber)
         }, [selectedPassangerName])
+
         return (
             <div>
                 <Box display='flex' mb={2}>
@@ -42,7 +43,7 @@ const PassengersInfo = observer(
                         onChange={(e) => setSelectedFlightName(e.target.value)}
                     >
                         <option value=''></option>
-                        {airlineStore.airlines.map(
+                        {airlineStore?.airlines?.map(
                             (flight: IAirlinesData, i: number) => (
                                 <option value={flight.flights} key={i}>
                                     {flight.flights}

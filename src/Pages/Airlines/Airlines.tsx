@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { inject, observer } from 'mobx-react'
 import { toJS } from 'mobx'
 import { airlineData } from '../../Shared/Utils/Constant'
-import { Box, Container } from '@mui/material'
+import { Box, Button, Container } from '@mui/material'
 import PassengersInfo from './AirlineInfo/PassengersInfo'
 import SeatsDetails from './SeatsDetails/SeatsDetails'
 import { IAirlinesData } from '../../Shared/Interface/airline.intertface'
@@ -18,6 +18,8 @@ const Airlines = observer(({ airlineStore }: any) => {
             seats: [],
         })
 
+    const [isChangeSeat, setIsChangeSeat] = useState(false)
+
     useEffect(() => {
         airlineStore.setAirlineData(airlineData)
     }, [])
@@ -29,9 +31,9 @@ const Airlines = observer(({ airlineStore }: any) => {
         setselectedFlightDetails(selectedFlight[0])
     }, [selectedFlightName, airlineStore.airlines])
 
-    console.log(selectedFlightName)
-    console.log(selectedPassangerName)
-
+    // console.log(selectedFlightName)
+    // console.log(selectedPassangerName)
+    // console.log(selectedFlightDetails)
     return (
         <Container>
             <Box
@@ -40,14 +42,30 @@ const Airlines = observer(({ airlineStore }: any) => {
                 flexDirection='row-reverse'
                 justifyContent='space-between'
             >
-                <PassengersInfo
+                <Box>
+                    <PassengersInfo
+                        selectedFlightDetails={selectedFlightDetails}
+                        selectedFlightName={selectedFlightName}
+                        setSelectedFlightName={setSelectedFlightName}
+                        selectedPassangerName={selectedPassangerName}
+                        setSelectedPassangerName={setSelectedPassangerName}
+                    />
+                    <Button
+                        variant='outlined'
+                        onClick={() => setIsChangeSeat(!isChangeSeat)}
+                    >
+                        Change seat
+                    </Button>
+                    {isChangeSeat && 'select your seat'}
+                </Box>
+                {/* </Box> */}
+                <SeatsDetails
                     selectedFlightDetails={selectedFlightDetails}
-                    selectedFlightName={selectedFlightName}
-                    setSelectedFlightName={setSelectedFlightName}
+                    isChangeSeat={isChangeSeat}
+                    setIsChangeSeat={setIsChangeSeat}
                     selectedPassangerName={selectedPassangerName}
-                    setSelectedPassangerName={setSelectedPassangerName}
+                    setselectedFlightDetails={setselectedFlightDetails}
                 />
-                <SeatsDetails selectedFlightDetails={selectedFlightDetails} />
             </Box>
         </Container>
     )
